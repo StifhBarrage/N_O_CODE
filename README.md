@@ -1,2 +1,6 @@
 # N_O_CODE
-Novus ordo repository 
+
+## *Novus ordo repository*
+### _This is the new organization for the future of technology_
+- Envolve or Die
+
