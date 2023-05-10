@@ -1,2 +1,2 @@
-# N_O_CODE
+# N.O_CODE
 Novus ordo repository 
