@@ -1,4 +1,4 @@
-# N_O_CODE
+# N.O_CODE
 
 ## *Novus ordo repository*
 ### _This is the new organization for the future of technology_
