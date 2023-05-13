@@ -3,10 +3,8 @@ import time
 
 # Ruta del programa .exe que quieres abrir
 ruta_programa = 'C:\\Users\\ACERa\\Downloads\\MegaDownloader\\pVPN.exe'
-
 # Tiempo en segundos que quieres que el programa esté abierto antes de cerrarlo
 tiempo_abierto = 60
-
 # Tiempo en segundos que quieres esperar antes de abrir el programa de nuevo
 tiempo_espera = 1
 
