@@ -6,9 +6,3 @@ if (first_name !== '') {
     ".contenido"
   ).innerHTML = `${first_name} welcome to this new life style`;
 } else {}
-
-
-
-
-
-    
