@@ -13,6 +13,6 @@ function saludar() {
 if (cond == 'Yes' || cond == 'yes' || cond == 'si' || cond == 'Si') { 
     document.querySelector('.contenido').innerHTML = `Eres arte bro, soloMillos`;
 }   else {  
-    document.querySelector('.contenido').innerHTML = 'Sos cacorro\nConviértete al azul!';
+    document.querySelector('.contenido').innerHTML = 'Sos cacorro, Conviértete al azul!';
 }
 }
