@@ -1,18 +1,31 @@
-const name = (prompt('MILONARIOS FC Champion 2023 \n ¿Cuál es tu nombre?'))
-if (name == 'Jhon'|| name == "jhon") {
-    document.querySelector('.contenido').innerHTML = `${name}, eres arte bro`;
-} else if (name == 'Stifh' || name == 'stifh') {
-    document.querySelector('.contenido').innerHTML = `${name}, sos cacorro
-    \nConviértete al azul!`;
-} else {
-    saludar();
-}
+/*
+//solicita el nombre
+const nombre = prompt('¿Cuál es tu nombre?');
 
-function saludar() {
-    const cond = (prompt('¿Eres de Millonarios FC?'));
-if (cond == 'Yes' || cond == 'yes' || cond == 'si' || cond == 'Si') { 
-    document.querySelector('.contenido').innerHTML = `Eres arte bro, soloMillos`;
-}   else {  
-    document.querySelector('.contenido').innerHTML = 'Sos cacorro, Conviértete al azul!';
-}
-}
+//toma el nombre y lo muestra en pantalla
+document.querySelector('.contenido').innerHTML = `${nombre} está aprendiendo JavaScript Moderno`;
+
+//asigna valor a la variable producto
+const producto1 = 'TV 50 Pulgadas';
+
+// comentario individual
+
+============================
+==  comentario en bloque  ==
+============================
+
+
+//calcular tiempo de un proceso 
+console.time('Hola');
+
+console.warn('Algo salió mal');
+console.warn('Algo salió mal');
+console.warn('Algo salió mal');                
+console.warn('Algo salió mal');
+console.warn('Algo salió mal');
+
+console.timeEnd('Hola');
+
+*/
+
+conso
