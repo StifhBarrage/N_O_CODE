@@ -1,10 +1,3 @@
-const contructor = {
-    nombre: 'Juan',
-    apellido: 'Perez',
-    edad: 20,
-
-}
-
 const reproductor = {
     reproducir: function(id) {
         console.log(`Reproduciendo cancion con el id ${id}`);
