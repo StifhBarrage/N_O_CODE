@@ -38,4 +38,5 @@ resultado = Math.random();
 
 //Aleatorio dentro de un rango
 resultado = Math.floor(Math.random() * 30);
+
 console.log(resultado);
