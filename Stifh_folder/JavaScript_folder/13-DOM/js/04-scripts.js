@@ -12,3 +12,7 @@ console.log(secondCard);
 
 const form = document.querySelector('#formulario');
 console.log(form);
+
+// seleccionar elementos HTML
+const nav = document.querySelector('nav');
+console.log(nav);
