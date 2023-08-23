@@ -11,6 +11,10 @@ const producto2 = {
     precio: 800
 }
 
+const producto4 = {
+    nombre: 'Mouse',
+    precio: 40
+}
 
 carrito.push(producto); // Agrega el objeto producto al arreglo carrito
 carrito.push(producto2); // Agrega el objeto producto2 al arreglo carrito
@@ -29,5 +33,6 @@ carrito.unshift(producto3); // Agrega el objeto producto3 al inicio del arreglo 
 // //Eliminar del inicio del arreglo
 // carrito.shift();
 
-carrito.splice(1, 2); // Elimina el elemento en la posición 1 del arreglo carrito
+carrito.splice(1, 2); // el segundo número indica cuantos elementos se eliminarán a partir de la posición 1 (primer número)
 console.table(carrito); // Imprime el arreglo carrito 
+
