@@ -17,3 +17,4 @@ const sumar2 = function() {
 
 // Se conoce como hoisting -> elevación
 
+//

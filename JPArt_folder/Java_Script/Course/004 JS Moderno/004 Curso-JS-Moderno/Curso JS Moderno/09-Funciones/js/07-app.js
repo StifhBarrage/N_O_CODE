@@ -16,4 +16,4 @@ function usuarioAutenticado(usuario) { // Tercera función
 }
 
 // NOTA: El orden de las funciones es importante, si se llama a una función antes de que esta sea declarada, se producirá un error
-
+//

@@ -23,3 +23,4 @@ reproductor.pausar();
 reproductor.borrar(30);
 reproductor.crearPlaylist('Heavy Metal');
 reproductor.reproducirPlaylist('Heavy Metal');
+//

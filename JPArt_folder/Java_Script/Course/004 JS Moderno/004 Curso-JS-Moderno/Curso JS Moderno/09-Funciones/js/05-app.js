@@ -13,3 +13,4 @@ function saludar(nombre, apellido) {
 saludar('Jhon', 'Prieto'); // Jhon y Prieto son argumentos de la función (se pasan por valor)s
 saludar('Juan'); // Juan y Perez son argumentos de la función (se pasan por valor
 saludar(); // undefined y undefined son argumentos de la función (se pasan por valor
+//

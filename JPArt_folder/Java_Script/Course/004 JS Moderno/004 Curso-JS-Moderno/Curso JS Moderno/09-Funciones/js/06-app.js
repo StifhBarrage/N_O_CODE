@@ -3,3 +3,4 @@ function saludar(nombre = '', apellido = '') { // podemos asignar valores por de
 }
 
 saludar('Jhon', ); // Jhon y Prieto son argumentos de la función (se pasan por valor)s
+//

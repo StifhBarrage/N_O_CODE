@@ -11,3 +11,4 @@ const aprendiendo2 = () => 'Aprendiendo JavaScript'; //Retorna lo mismo que la f
 
 console.log(aprendiendo2());
 console.log(aprendiendo());
+//

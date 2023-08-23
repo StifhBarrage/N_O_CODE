@@ -15,3 +15,4 @@ const sumar2 = function() {
 }       
 
 sumar2(); // Llamado de la función
+//
