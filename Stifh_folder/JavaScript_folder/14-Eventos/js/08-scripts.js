@@ -4,6 +4,7 @@ parrafo1.textContent = 'Concierto';
 parrafo1.classList.add('categoria');
 parrafo1.classList.add('concierto');
 
+
 // Segundo parrafo
 const parrafo2 = document.createElement('P');
 parrafo2.textContent = 'Concierto de Rock';
@@ -13,6 +14,9 @@ parrafo2.classList.add('titulo');
 const parrafo3 = document.createElement('p');
 parrafo3.textContent = '$800 por persona';
 parrafo3.classList.add('precio');
+parrafo3.onclick = () => {
+    nuevaFuncion(1);
+};
 
 // crear el div...
 const info = document.createElement('div');
@@ -38,3 +42,7 @@ contenedorCard.appendChild(info);
 // Insertarlo en el HTML...
 const contenedor = document.querySelector('.hacer .contenedor-cards');
 contenedor.appendChild(contenedorCard); // al inicio info
+
+function nuevaFuncion(id) {
+    console.log('Diste click en precio', id);
+}
