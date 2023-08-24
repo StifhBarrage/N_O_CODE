@@ -10,10 +10,18 @@ uploadEventListeners();
 function uploadEventListeners(){
     // add the course to the shopping cart
     listCourses.addEventListener('click', addCourse);
+    // remove the course from the shopping cart
+    cart.addEventListener('click', removeCourse);
+    // empty the shopping cart
+    emptyCartBtn.addEventListener('click', () => {
+        itemsCart = []; // reset the array
+        clearHTML(); // remove the HTML
+    });
 
 };
 
 
+// PRIMARY FUNCTIONS ########################################
 
 // Functions for add the course to the shopping cart
 function addCourse(e){
@@ -24,6 +32,16 @@ function addCourse(e){
     }
 };
 
+function removeCourse(e){
+    if(e.target.classList.contains('borrar-curso')){
+        const courseIdToDelete = e.target.getAttribute('data-id');
+        // remove from the array of the shopping cart by the data-id
+        itemsCart = itemsCart.filter( course => course.id !== courseIdToDelete);
+        showShoppingCart(); // show the shopping cart
+    }
+}
+
+// SECONDARY FUNCTIONS #######################################
 
 // Get the info of the course
 const readDataCourse = (course) => {
@@ -48,10 +66,11 @@ const readDataCourse = (course) => {
             }
         });
         itemsCart = [...courses];
+    }else{
+        // add the course to the array of the shopping cart
+        itemsCart = [...itemsCart, infoCourse];   
     }
 
-    // add elements to the shopping cart
-    itemsCart = [...itemsCart, infoCourse];
     console.log(itemsCart);
     showShoppingCart();
 }
