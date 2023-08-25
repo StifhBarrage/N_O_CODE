@@ -42,6 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             resetForm();
 
+            const alertSuccess = document.createElement('P');
+            alertSuccess.classList.add('bg-green-500', 'text-white', 'p-2', 'text-center', 'my-10', 'font-bold', 'uppercase');
+            alertSuccess.textContent = 'El mensaje se envió correctamente';
+            form.appendChild(alertSuccess);
+
         }, 3000);
     }
 
