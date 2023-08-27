@@ -16,6 +16,14 @@
                 <div class="flex flex-col space-y-2">
                     <label for="email" class="font-regular font-medium">Email:</label>
                     <input id="email" type="email" name="email" placeholder="Email Destino, ej: mkt@empresa.com" class="border border-gray-300 px-3 py-2 rounded-lg"  />
+                    <div class="flex flex-col space-y-2">
+                        <label for="cc" class="font-regular font-medium">CC:</label>
+                        <input id="cc" type="text" name="cc" placeholder="Direcciones de correo CC separadas por comas" class="border border-gray-300 px-3 py-2 rounded-lg" />
+                    </div>
+                    <div id="cc-container" class="hidden">
+                        <button id="btnRemoveCc" type="button">Quitar CC</button>
+                    </div>
+                    <button id="btnAddCc" type="button">Agregar CC</button>
                 </div>
 
                 <div class="flex flex-col space-y-2">

@@ -21,14 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
     inputEmail.addEventListener('input', validate);
     inputSubject.addEventListener('input', validate);
     inputMessage.addEventListener('input',validate);
-
     form.addEventListener('submit', sendEmail);
-
     btnReset.addEventListener('click', function(e) {
         e.preventDefault();
         resetForm();
 
     });
+    addCc();
 
     function sendEmail(e) {
         e.preventDefault();
@@ -128,6 +127,27 @@ document.addEventListener('DOMContentLoaded', function() {
             checkEmailObject();
     }
 
+    function addCc() {
+        const cc = document.querySelector('#cc');
+        const ccContainer = document.querySelector('#cc-container');
+        const btnAddCc = document.querySelector('#btnAddCc');
+        const btnRemoveCc = document.querySelector('#btnRemoveCc');
+    
+        btnAddCc.addEventListener('click', function() {
+            ccContainer.classList.remove('hidden');
+            cc.required = true;
+            cc.focus();
+        });
+    
+        btnRemoveCc.addEventListener('click', function() {
+            ccContainer.classList.add('hidden');
+            cc.required = false;
+            cc.value = '';
+            validate({ target: cc }); // Validar el campo CC vacío
+        });
+    }
+
 });
+
 
 
