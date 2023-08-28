@@ -16,11 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnSummit = document.querySelector('#formulario button[type="submit"]');
     const btnReset = document.querySelector('#formulario button[type="reset"]');
     const spinner = document.querySelector('#spinner');
+    const inputCc = document.querySelector('#cc');
+
 
     // assign events
     inputEmail.addEventListener('input', validate);
     inputSubject.addEventListener('input', validate);
     inputMessage.addEventListener('input',validate);
+    inputCc.addEventListener('input', validateCc);
     form.addEventListener('submit', sendEmail);
     btnReset.addEventListener('click', function(e) {
         e.preventDefault();
@@ -104,6 +107,23 @@ document.addEventListener('DOMContentLoaded', function() {
         return resultado;
     }
 
+    function validateCc(e) {
+        const ccEmails = e.target.value.split(',').map(email => email.trim());
+
+        const invalidCCs = ccEmails.filter(email => email !== '' && !validateEmail(email));
+    
+        if (invalidCCs.length > 0) {
+            showAlert(`Los siguientes CCs no son válidos: ${invalidCCs.join(', ')}`, e.target.parentElement);
+            email.cc = ''; // Reiniciar el valor si hay CCs inválidos
+            checkEmailObject();
+            return;
+        }
+    
+        clearAlert(e.target.parentElement);
+        email.cc = ccEmails.join(', ').toLowerCase();
+        checkEmailObject();
+    }
+
     function checkEmailObject() {
         console.log(email);
         if (Object.values(email).includes('')) {
@@ -125,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
             form.reset();
             checkEmailObject();
     }
+
 });
 
 
