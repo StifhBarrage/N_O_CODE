@@ -42,7 +42,6 @@ function agregarCurso(e) {
 
 // Elimina un curso del carrito
 function eliminarCurso(e) {
-    console.log(e.target.classList);
     if (e.target.classList.contains('borrar-curso')) {
 
         const cursoId = e.target.getAttribute('data-id');
@@ -131,3 +130,4 @@ function limpiarHTML() {
         contenedorCarrito.removeChild(contenedorCarrito.firstChild);
     }
 }
+
