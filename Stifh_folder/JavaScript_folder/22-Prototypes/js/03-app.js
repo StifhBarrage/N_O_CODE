@@ -22,12 +22,14 @@ Client.prototype.typeClient = function(){
     } else {
         type = 'Normal';
     }
+    return type;
+
 }
 
 Client.prototype.clientNameBalance = function() {
     return `Name: ${this.name}, 
-            Balance: ${this.balance}, 
-            Category: ${this.category}`;
+Balance: ${this.balance}, 
+Type Client: ${this.typeClient()}`;
 }
 
 Client.prototype.retireBalance = function(retire) {
@@ -38,9 +40,9 @@ Company.prototype.typeClient = Client.prototype.typeClient;
 
 // instantiate it
 const pedro = new Client('Pedro', 600);
-console.log(pedro.tipoCliente());
+console.log(pedro.typeClient());
 console.log(pedro.clientNameBalance());
-pedro.retireBalance(300);
-
+pedro.retireBalance(200);
 console.log(pedro);
+
 
