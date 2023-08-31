@@ -151,19 +151,32 @@ function quoteInsurance(e) {
     const year = document.querySelector('#year').value;
     // Read the type of coverage
     const type = document.querySelector('input[name="tipo"]:checked').value;
+    // Check that all the fields have something selected
     if (brand === '' || year === '' || type === '') {
         if (document.querySelector('.mensaje') === null) {
             ui.showAlert('All fields are required', 'error');
         }
         return;
     }
+    // check if exits a previous alert
     if (document.querySelector('.mensaje') === null){
         ui.showAlert('Quoting...', 'exito');
+    }
+
+    // Hide previous quotes
+    const results = document.querySelector('#resultado div');
+    
+    if (results != null) {
+        results.remove();
     }
 
     // instantiate insurance
     const insurance = new Insurance(brand, year, type);
     insurance.quoteInsurance();
+
+    // Show the result
+    ui.showResult(insurance.quoteInsurance(), insurance);
+
 }
 
 
