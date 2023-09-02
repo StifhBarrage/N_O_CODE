@@ -31,11 +31,18 @@ function Persona (nombre, saldo, telefono) {
     this.telefono = telefono
 }
 
-Persona.prototype = Object.create (Cliente.prototype); // Copiar el prototype de cliente
 
+Persona.prototype = Object.create (Cliente.prototype); // Copiar el prototype de cliente
 Persona.prototype.constructor = Cliente;
 
 
+// Instanciarlo
 const juan = new Persona ('Juan', 5000, 13258965);
 console.log(juan);
 console.log(juan.nombreClienteSaldo());
+
+
+
+Persona.prototype.mostrarTelefono = function () {
+    `El telefono de esta persona es ${this.telefono}`
+}
