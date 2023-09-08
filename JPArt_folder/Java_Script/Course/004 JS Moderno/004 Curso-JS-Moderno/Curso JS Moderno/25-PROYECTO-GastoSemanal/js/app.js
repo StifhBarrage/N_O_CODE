@@ -166,3 +166,5 @@ function agregarGasto(e) {
     // Resetear el formulario
     formulario.reset();
 }
+
+// No quiero perder el commit :(
