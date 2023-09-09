@@ -109,6 +109,25 @@ class UI {
     actualizarRestante(restante) {
         document.querySelector('#restante').textContent = restante;
     }
+
+    compobarPresupuesto(presupuestoObj) {	
+        const { presupuesto, restante } = presupuestoObj;
+
+        const restanteDiv = document.querySelector('.restante');
+
+        // Comprobar 25%
+        if ( (presupuesto / 4) > restante ) {
+            restanteDiv.classList.remove('alert-success', 'alert-warning');
+            restanteDiv.classList.add('alert-danger');
+        } else if ( (presupuesto / 2) > restante ) {
+            restanteDiv.classList.remove('alert-success');
+            restanteDiv.classList.add('alert-warning');
+        } else {
+            restanteDiv.classList.remove('alert-danger', 'alert-warning');
+            restanteDiv.classList.add('alert-success');
+        }
+    }
+
 }
 
 // Instanciar
@@ -163,8 +182,9 @@ function agregarGasto(e) {
     ui.agregarGastoListado(gastos);
     ui.actualizarRestante(restante);
 
+    ui.compobarPresupuesto(presupuesto);
+
     // Resetear el formulario
     formulario.reset();
 }
 
-// No quiero perder el commit :(
