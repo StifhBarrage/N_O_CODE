@@ -7,7 +7,7 @@ datos.set('profesion', 'Desarrollador Web');
 
 
 
-// Default iterador --> Retorna la llave y el valor
+// Default iterador --> No sirve para los Maps
 for (let ciudad of ciudades) {
     console.log(ciudad);
 }
