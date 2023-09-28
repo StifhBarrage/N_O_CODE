@@ -2,7 +2,7 @@ import alias , { nombreCliente as nombre1, ahorro, mostrarInformacion, tieneSald
 import { Empresa } from './empresa.js';
 // export default no va dentro de los corchetes y no interesa con qué nombre se mande a llamar,
 // ya que solo se puede tener un export default por archivo
-
+// Se le puede dar un alias a los imports normales con 'as'
 
 alias();
 
