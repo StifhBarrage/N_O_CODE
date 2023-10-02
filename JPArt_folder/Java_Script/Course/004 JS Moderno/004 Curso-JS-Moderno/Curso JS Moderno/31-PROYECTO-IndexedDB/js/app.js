@@ -1,5 +1,7 @@
+// NUEVO: Crear DB
+let DB;
 
-let DB
+
 const mascotaInput = document.querySelector('#mascota');
 const propietarioInput = document.querySelector('#propietario');
 const telefonoInput = document.querySelector('#telefono');
@@ -14,24 +16,17 @@ const contenedorCitas = document.querySelector('#citas');
 const formulario = document.querySelector('#nueva-cita')
 formulario.addEventListener('submit', nuevaCita);
 
-// Heading
-const heading = document.querySelector('#administra');
-
 
 let editando = false;
 
 
-
-// IndexedDB
-window.onload = () => {
-    eventListeners();
+// NUEVO: 
+document.addEventListener('DOMContentLoaded', () => {
+    eventListeners(); 
     crearDB();
-}
-
-
+});
 
 // Eventos
-eventListeners();
 function eventListeners() {
     mascotaInput.addEventListener('change', datosCita);
     propietarioInput.addEventListener('change', datosCita);
@@ -39,6 +34,7 @@ function eventListeners() {
     fechaInput.addEventListener('change', datosCita);
     horaInput.addEventListener('change', datosCita);
     sintomasInput.addEventListener('change', datosCita);
+    
 }
 
 const citaObj = {
@@ -74,9 +70,8 @@ class Citas {
 }
 
 class UI {
-
-    constructor({citas}) {
-        this.textoHeading(citas);
+    constructor() {
+        this.textoHeading();
     }
 
     imprimirAlerta(mensaje, tipo) {
@@ -107,63 +102,60 @@ class UI {
        
         this.limpiarHTML();
 
-        this.textoHeading(resultado);
-
-        // Leer el contenido de la base de datos
+        // NUEVO : 
         const objectStore = DB.transaction('citas').objectStore('citas');
-
-        const fnTextoHeading = this.textoHeading();
 
         const total = objectStore.count();
         total.onsuccess = function() {
-            fnTextoHeading(total.result);
+            console.log(total.result);
         }
 
-        objectStore.openCursor().onsuccess = function(e) {
-
+       // retorna un objeto request o petición, 
+       objectStore.openCursor().onsuccess = function(e) {
+            // cursor se va a ubicar en el registro indicado para accede ra los datos
             const cursor = e.target.result;
-            
+
             if(cursor) {
 
                 const {mascota, propietario, telefono, fecha, hora, sintomas, id } = cursor.value;
-    
+
                 const divCita = document.createElement('div');
                 divCita.classList.add('cita', 'p-3');
                 divCita.dataset.id = id;
-    
+
                 // scRIPTING DE LOS ELEMENTOS...
                 const mascotaParrafo = document.createElement('h2');
                 mascotaParrafo.classList.add('card-title', 'font-weight-bolder');
                 mascotaParrafo.innerHTML = `${mascota}`;
-    
+
                 const propietarioParrafo = document.createElement('p');
                 propietarioParrafo.innerHTML = `<span class="font-weight-bolder">Propietario: </span> ${propietario}`;
-    
+
                 const telefonoParrafo = document.createElement('p');
                 telefonoParrafo.innerHTML = `<span class="font-weight-bolder">Teléfono: </span> ${telefono}`;
-    
+
                 const fechaParrafo = document.createElement('p');
                 fechaParrafo.innerHTML = `<span class="font-weight-bolder">Fecha: </span> ${fecha}`;
-    
+
                 const horaParrafo = document.createElement('p');
                 horaParrafo.innerHTML = `<span class="font-weight-bolder">Hora: </span> ${hora}`;
-    
+
                 const sintomasParrafo = document.createElement('p');
                 sintomasParrafo.innerHTML = `<span class="font-weight-bolder">Síntomas: </span> ${sintomas}`;
-    
+
                 // Agregar un botón de eliminar...
                 const btnEliminar = document.createElement('button');
                 btnEliminar.onclick = () => eliminarCita(id); // añade la opción de eliminar
                 btnEliminar.classList.add('btn', 'btn-danger', 'mr-2');
                 btnEliminar.innerHTML = 'Eliminar <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
-    
+
                 // Añade un botón de editar...
                 const btnEditar = document.createElement('button');
-                btnEditar.onclick = () => cargarEdicion(cita);
-    
+                btnEditar.onclick = () => cargarEdicion(cursor.value);
+
                 btnEditar.classList.add('btn', 'btn-info');
                 btnEditar.innerHTML = 'Editar <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>'
-    
+
                 // Agregar al HTML
                 divCita.appendChild(mascotaParrafo);
                 divCita.appendChild(propietarioParrafo);
@@ -173,37 +165,27 @@ class UI {
                 divCita.appendChild(sintomasParrafo);
                 divCita.appendChild(btnEliminar)
                 divCita.appendChild(btnEditar)
-    
+
                 contenedorCitas.appendChild(divCita);
 
-                // Consultar los próximos registros
-                cursor.continue();
-
-           }
+            }// fin de if
 
 
-        }
-
+        } // Fin de función de cursor...
    }
-
-   textoHeading(resultado) {
-
-        if(resultado > 0 ) {
-            heading.textContent = 'Administra tus Citas '
-        } else {
-            heading.textContent = 'No hay Citas, comienza creando una'
-        }
-    }
 
    limpiarHTML() {
         while(contenedorCitas.firstChild) {
             contenedorCitas.removeChild(contenedorCitas.firstChild);
         }
    }
+
+
 }
 
 
 const administrarCitas = new Citas();
+
 console.log(administrarCitas);
 const ui = new UI(administrarCitas);
 
@@ -220,17 +202,35 @@ function nuevaCita(e) {
     }
 
     if(editando) {
-        // Estamos editando
-        administrarCitas.editarCita( {...citaObj} );
 
-        ui.imprimirAlerta('Guardado Correctamente');
+        // NUEVO: 
+        const transaction = DB.transaction(['citas'], 'readwrite');
+        const objectStore = transaction.objectStore('citas');
+        // console.log(objectStore);
+        const peticion = objectStore.put(citaObj);
 
-        formulario.querySelector('button[type="submit"]').textContent = 'Crear Cita';
+        transaction.oncomplete = () => {
 
-        editando = false;
+            console.log('Editado Correctamente.')
+            
+            // Mover el código aqui..
+            // Estamos editando
+            administrarCitas.editarCita( {...citaObj} );
+
+            ui.imprimirAlerta('Guardado Correctamente');
+
+            formulario.querySelector('button[type="submit"]').textContent = 'Crear Cita';
+
+            editando = false;
+        }
+
+        transaction.onerror = () => {
+            console.log('Hubo un errorr.')
+        }
+
 
     } else {
-        // Nuevo Registro
+        // Nuevo Registrando
 
         // Generar un ID único
         citaObj.id = Date.now();
@@ -238,19 +238,24 @@ function nuevaCita(e) {
         // Añade la nueva cita
         administrarCitas.agregarCita({...citaObj});
 
-        // Insertar registro en IndexedDB   
+
+        // NUEVO: 
         const transaction = DB.transaction(['citas'], 'readwrite');
         const objectStore = transaction.objectStore('citas');
-
-        // Insertar en la BD
-        objectStore.add(citaObj);
+        // console.log(objectStore);
+        const peticion = objectStore.add(citaObj);
 
         transaction.oncomplete = () => {
-            console.log('Cita agregada');
+            console.log('Cita agregada!');
+
+            // Mostrar mensaje de que todo esta bien...
+            ui.imprimirAlerta('Se agregó correctamente')
+
         }
 
-        // Mostrar mensaje de que todo esta bien...
-        ui.imprimirAlerta('Se agregó correctamente')
+        transaction.onerror = () => {
+            console.log('Hubo un error!');
+        }
     }
 
 
@@ -262,6 +267,9 @@ function nuevaCita(e) {
 
     // Reiniciar Formulario
     formulario.reset();
+
+
+
 
 }
 
@@ -277,9 +285,29 @@ function reiniciarObjeto() {
 
 
 function eliminarCita(id) {
-    administrarCitas.eliminarCita(id);
 
-    ui.imprimirCitas()
+
+    // NUEVO:
+    const transaction = DB.transaction(['citas'], 'readwrite');
+    const objectStore = transaction.objectStore('citas');
+    
+   const resultado =  objectStore.delete(id);
+
+    // console.log( objectStore);
+    // console.log( resultado);
+
+
+    transaction.oncomplete = () => {
+        console.log(`Cita  ${id} fue eliminado`);
+        administrarCitas.eliminarCita(id);
+        ui.imprimirCitas()
+    }
+
+
+    transaction.onerror = () => {
+        console.log('Hubo un error!');
+    }
+ 
 }
 
 function cargarEdicion(cita) {
@@ -309,47 +337,52 @@ function cargarEdicion(cita) {
 
 }
 
+
+// Código de IndexedDB
 function crearDB() {
-    // Crear la base de datos version 1.0
-    let crearDB = window.indexedDB.open('Citas', 1);
-    
-    // Si hay un error, lanzarlo
+    // crear base de datos con la versión 1
+    const crearDB = window.indexedDB.open('citas', 1);
+
+    // si hay un error, lanzarlo
     crearDB.onerror = function() {
-        console.log('Hubo un error a la hora de crear la BD');
+        console.log('Hubo un error');
     }
 
-    // Si todo esta bien, asignar a database el resultado
+    // si todo esta bien, asignar a database el resultado
     crearDB.onsuccess = function() {
-        console.log('Base de datos creada');
+        console.log('Citas Listo!');
 
+        // guardamos el resultado
         DB = crearDB.result;
 
-        // Mostrar citas al cargar
-        ui.imprimirCitas();
-
+        // mostrar citas al cargar
+        ui.imprimirCitas()
     }
 
-    // Configuración de la base de datos
-    crearDB.onupgradeneeded = function(e) { // Solo se ejecuta una vez
-        const db = e.target.result
+    // este método solo corre una vez
+    crearDB.onupgradeneeded = function(e) {
+        // el evento que se va a correr tomamos la base de datos
+        const db = e.target.result;
 
-        const objectStore = db.createObjectStore('citas', { //Permite crear las columnas de la BD
-            keyPath: 'id',
-            autoIncrement: true // Incrementa el valor de la llave
-        });
+        
+        // definir el objectstore, primer parametro el nombre de la BD, segundo las opciones
+        // keypath es de donde se van a obtener los indices
+        const objectStore = db.createObjectStore('citas', { keyPath: 'id',  autoIncrement: true } );
 
-        // Definir las columnas
-        objectStore.createIndex('mascota', 'mascota', { unique: false });
-        objectStore.createIndex('propietario', 'propietario', { unique: false });
-        objectStore.createIndex('telefono', 'telefono', { unique: false });
-        objectStore.createIndex('fecha', 'fecha', { unique: false });
-        objectStore.createIndex('hora', 'hora', { unique: false });
-        objectStore.createIndex('sintomas', 'sintomas', { unique: false });
-        objectStore.createIndex('id', 'id', { unique: true });
+        //createindex, nombre y keypath, 3ro los parametros
+        objectStore.createIndex('mascota', 'mascota', { unique: false } );
+        objectStore.createIndex('cliente', 'cliente', { unique: false } );
+        objectStore.createIndex('telefono', 'telefono', { unique: false } );
+        objectStore.createIndex('fecha', 'fecha', { unique: false } );
+        objectStore.createIndex('hora', 'hora', { unique: false } );
+        objectStore.createIndex('sintomas', 'sintomas', { unique: false } );
+        objectStore.createIndex('id', 'id', { unique: true } );
 
-        console.log('Columnas creadas');
+        
+
+        console.log('Database creada y lista');
     }
-
-
-
 }
+
+
+
