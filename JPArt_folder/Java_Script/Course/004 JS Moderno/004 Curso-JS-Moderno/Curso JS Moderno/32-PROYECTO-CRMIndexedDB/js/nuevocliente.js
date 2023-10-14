@@ -1,113 +1,114 @@
-(function (){ // IIFE para que no se mezcle con otros archivos
-   
+(function() {
     let DB;
+
     const formulario = document.querySelector('#formulario');
 
-    
     document.addEventListener('DOMContentLoaded', () => {
-        
-        conectarDB();
-
         formulario.addEventListener('submit', validarCliente);
 
+        conectarDB();
     });
 
     function conectarDB() {
-        const abrirConexion = window.indexedDB.open('crm', 1);
+        // ABRIR CONEXIÓN EN LA BD:
 
+        let abrirConexion = window.indexedDB.open('crm', 1);
+
+        // si hay un error, lanzarlo
         abrirConexion.onerror = function() {
             console.log('Hubo un error');
         };
-
+    
+        // si todo esta bien, asignar a database el resultado
         abrirConexion.onsuccess = function() {
+            // guardamos el resultado
             DB = abrirConexion.result;
         };
     }
 
+
     function validarCliente(e) {
         e.preventDefault();
 
-        // Leer todos los inputs
+
         const nombre = document.querySelector('#nombre').value;
         const email = document.querySelector('#email').value;
         const telefono = document.querySelector('#telefono').value;
         const empresa = document.querySelector('#empresa').value;
 
-        // Mostrar error si los campos estan vacios
-        if (nombre === '' || email === '' || telefono === '' || empresa === '') {
-            imprimirAlerta('Todos los campos son obligatorios', 'error');
+        if(nombre === '' || email === '' || telefono === '' || empresa === '') {
+             
 
             return;
-        }	
+        }
 
-        // Crear un objeto con la informacion
+        // añadir a la BD...
+        // crear un nuevo objeto con toda la info
 
         const cliente = {
-            nombre,
+            nombre, 
             email,
             telefono,
-            empresa,
-            id: Date.now() // Genera un id unico 
+            empresa
         };
+
+        // Generar un ID único
+        cliente.id = Date.now();
+
+
 
         crearNuevoCliente(cliente);
+    }
 
-    function crearNuevoCliente (cliente) {
+    function crearNuevoCliente(cliente) {
 
-        const transaction = DB.transaction(['crm'], 'readwrite');   // transaction es una variable que almacena la transaccion  y el primer parametro es el nombre de la base de datos y el segundo es el modo de acceso
-
-       
-        const objectStore = transaction.objectStore('crm'); // objectStore es una variable que almacena el objeto de la base de datos
         
-        objectStore.add(cliente); // add es un metodo que agrega un nuevo registro a la base de datos
 
-        transaction.onerror = function() {
-            imprimirAlerta('Hubo un error', 'error');
-        };
+        // NUEVO: 
+        const transaction = DB.transaction(['crm'], 'readwrite');
+        const objectStore = transaction.objectStore('crm');
+        // console.log(objectStore);
+        objectStore.add(cliente);
 
-        transaction.oncomplete = function() {
-            imprimirAlerta('El cliente se agrego correctamente');
+        transaction.oncomplete = () => {
+            console.log('Cliente Agregado');
+
+            // Mostrar mensaje de que todo esta bien...
+            imprimirAlerta('Se agregó correctamente');
 
             setTimeout(() => {
                 window.location.href = 'index.html';
             }, 3000);
-        }
+        };
 
-        
-    
-    };
+        transaction.onerror = () => {
+            console.log('Hubo un error!');
+            imprimirAlerta('Hubo un Error', 'error');
+        };
     }
 
+    function imprimirAlerta(mensaje, tipo) {
+         // Crea el div
 
-    function imprimirAlerta (mensaje, tipo) {
+         const divMensaje = document.createElement('div');
+         divMensaje.classList.add( "px-4", "py-3", "rounded",  "max-w-lg", "mx-auto", "mt-6", "text-center" );
 
-        const alerta = document.querySelector('.alerta');
-
-        if (!alerta) { // Si no hay alerta, crear una
-            //crear alerta
-        const divMensaje = document.createElement('div');
-        divMensaje.classList.add('px-4', 'py-3', 'rounded', 'max-w-lg', 'mx-auto', 'mt-6', 'text-center', 'border', 'alerta');
-        
-        if (tipo === 'error') {
-            divMensaje.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
-        } else {
-            divMensaje.classList.add('bg-green-100', 'border-green-400', 'text-green-700');
-        }
-
-        divMensaje.textContent = mensaje; // Agregar texto
-
-        formulario.appendChild(divMensaje); // Agregar al DOM
-
-        setTimeout(() => {
-            divMensaje.remove();
-        }, 3000); // Eliminar alerta despues de 3 segundos
-
-        }
-
-
-        
+         if(tipo === 'error') {
+            divMensaje.classList.add('bg-red-100', "border-red-400", "text-red-700");
+         } else {
+             divMensaje.classList.add('bg-green-100', "border-green-400", "text-green-700");
+         }
+         
+         // Mensaje de error
+         divMensaje.textContent = mensaje;
  
+         // Insertar en el DOM
+        formulario.appendChild(divMensaje);
+ 
+         // Quitar el alert despues de 3 segundos
+         setTimeout( () => {
+             divMensaje.remove();
+         }, 3000);
     }
-
 
 })();
