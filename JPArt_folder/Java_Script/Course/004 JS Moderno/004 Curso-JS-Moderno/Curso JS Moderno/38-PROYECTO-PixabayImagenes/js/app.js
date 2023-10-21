@@ -1,8 +1,11 @@
 const formulario = document.querySelector('#formulario');
 const resultado = document.querySelector('#resultado');
+const paginacionDiv = document.querySelector('#paginacion');
 
 const registrosPorPagina = 40;
 let totalPaginas;
+let iterador;
+let paginaActual = 1;
 
 window.onload = () => {
     formulario.addEventListener('submit', validarFormulario);
@@ -18,7 +21,7 @@ function validarFormulario(e) {
         return;
     }
 
-    buscarImagenes(terminoBusqueda);
+    buscarImagenes();
 }
 
 function mostrarAlerta(mensaje) {
@@ -44,10 +47,12 @@ function mostrarAlerta(mensaje) {
     }
 }
 
-function buscarImagenes(termino) {
+function buscarImagenes() {
+
+    const termino = document.querySelector('#termino').value;
 
     const key = '24740169-a44595c309dbaa5f644311a6d';
-    const url = `https://pixabay.com/api/?key=${key}&q=${termino}`;
+    const url = `https://pixabay.com/api/?key=${key}&q=${termino}&per_page=${registrosPorPagina}&page=${paginaActual}`;
 
     fetch(url)
         .then(respuesta => respuesta.json())
@@ -56,6 +61,15 @@ function buscarImagenes(termino) {
             console.log(totalPaginas)
             mostrarImagenes(resultado.hits);
         });
+
+}
+
+// Genereador que va a registrar la cantidad de elementos de acuerdo a las paginas
+
+function *crearPaginador(total) {
+    for (let i = 1; i <= total; i++) {
+        yield i;
+    }
 
 }
 
@@ -93,6 +107,39 @@ function mostrarImagenes(imagenes) {
         </div>
         `;
     });
+    
+    // Limpiar el paginador previo
+    while (paginacionDiv.firstChild) {
+        paginacionDiv.removeChild(paginacionDiv.firstChild);
+    }
 
+    //generar nuevo paginador
+    imprimirGenerador();
 
 };
+
+function imprimirGenerador() {
+    iterador = crearPaginador(totalPaginas);
+
+    while (true) {
+        const { value, done } = iterador.next();
+        if (done) return;
+
+        // Caso contrario, genera un botón por cada elemento en el generador
+        const boton = document.createElement('A');
+        boton.href = '#';
+        boton.dataset.pagina = value;
+        boton.textContent = value;
+        boton.classList.add('siguiente', 'bg-yellow-400', 'px-4', 'py-1', 'mr-2', 'font-bold', 'mb-4', 'rounded');
+
+        boton.onclick = () => {
+            paginaActual = value;
+
+            buscarImagenes(); // consulta otra vez la api para ir a la página correcta
+
+        }
+        paginacionDiv.appendChild(boton);
+
+    }
+
+}
