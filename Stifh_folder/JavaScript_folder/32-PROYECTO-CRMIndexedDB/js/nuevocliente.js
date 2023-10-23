@@ -46,6 +46,31 @@
         crearNuevoCliente(cliente);
     }
 
+    function crearNuevoCliente(cliente){
+        // En IndexedDB se utilizan las transacciones
+        const transaction = DB.transaction(['crm'], 'readwrite');
+
+        // Habilitar el object store
+        const objectStore = transaction.objectStore('crm');
+
+        // Insertar en la DB
+        objectStore.add(cliente);
+
+        // Si hay un error
+        transaction.onerror = function(){
+            imprimirAlerta('Hubo un error', 'error');
+        };
+
+        // Si todo sale bien
+        transaction.oncomplete = function(){
+            imprimirAlerta('El cliente se agregó correctamente');
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
+        };
+    }
+
     function imprimirAlerta(mensaje, tipo){
         // Crear el div
         const divMensaje = document.createElement('div');
