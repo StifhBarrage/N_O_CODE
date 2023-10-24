@@ -6,6 +6,13 @@ let cliente = {
 
 };
 
+const categorias = {
+    1: 'Comida',
+    2: 'Bebida',
+    3: 'Postre'
+    
+}
+
 const btnGuardarCliente = document.querySelector('#guardar-cliente');
 btnGuardarCliente.addEventListener('click', guardarCliente);
 
@@ -86,14 +93,46 @@ function mostrarPlatillos(platillos) {
     platillos.forEach( platillo => {
 
         const row = document.createElement('DIV');
-        row.classList.add('row')
+        row.classList.add('row', 'py-3', 'border-bottom')
 
         const nombre = document.createElement('DIV');
         nombre.classList.add('col-md-4');
         nombre.textContent = platillo.nombre;
 
+        const precio = document.createElement('DIV');
+        precio.classList.add('col-md-3', 'fw-bold');
+        precio.textContent = `$${platillo.precio}`;
+
+        const categoria = document.createElement('DIV');
+        categoria.classList.add('col-md-3');
+        categoria.textContent = categorias[platillo.categoria]; // Se accede a la categoria del objeto categorias
+
+        const inputCantidad = document.createElement('INPUT');
+        inputCantidad.type = 'number';
+        inputCantidad.min = 0;
+        inputCantidad.value = 0;
+        inputCantidad.id = `producto-${platillo.id}`
+        inputCantidad.classList.add('form-control');
+
+        // Funcion que detecta la cantidad y el platillo que se está agregando
+        inputCantidad.onchange = function() {
+            const cantidad = parseInt(inputCantidad.value);
+            console.log(cantidad);
+            agregarPlatillo({ ...platillo, cantidad })
+            
+        }
+
+
+        const agregar = document.createElement('DIV');
+        agregar.classList.add('col-md-2');
+        agregar.appendChild(inputCantidad);
+
+
         row.appendChild(nombre);
-        
+        row.appendChild(precio);
+        row.appendChild(categoria);
+        row.appendChild(agregar);
+
         contenido.appendChild(row);
 
     } );
@@ -101,4 +140,37 @@ function mostrarPlatillos(platillos) {
 
 
 
+}
+
+function agregarPlatillo (producto) {
+    //Extraer el pedido actual
+    let { pedido } = cliente;
+
+    // Revisar que la cantidad sea mayor a 0
+    if(producto.cantidad > 0) {
+
+        // Revisar si el producto ya existe en el pedido
+        if (pedido .some( articulo => articulo.id === producto.id )) {
+            // El articulo ya existe, actualizar la cantidad
+            const pedidoActualizado = pedido.map( articulo => {
+                if (articulo.id === producto.id) {
+                    articulo.cantidad = producto.cantidad;
+                }
+                return articulo;
+
+            } );
+            // Asignar el nuevo arreglo de pedidos
+            cliente.pedido = [...pedidoActualizado];
+            
+        } else {
+            // El articulo no existe, agregarlo al pedido
+            cliente.pedido = [...pedido, producto];
+        }
+
+    } else {
+        // Eliminar del arreglo de pedidos
+        console.log('NO es mayor a 0');
+    }
+
+    console.log(cliente.pedido)
 }
