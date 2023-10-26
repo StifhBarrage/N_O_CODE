@@ -14,6 +14,7 @@ const btnGuardarCliente = document.querySelector('#guardar-cliente');
 btnGuardarCliente.addEventListener('click', guardarCliente);
 
 
+
 function guardarCliente() {
     const mesa = document.querySelector('#mesa').value;
     const hora = document.querySelector('#hora').value;
@@ -51,10 +52,12 @@ function guardarCliente() {
     }
 }
 
+
 function mostrarSecciones() {
     const seccionesOcultas = document.querySelectorAll('.d-none');
     seccionesOcultas.forEach(seccion => seccion.classList.remove('d-none'));
 }
+
 
 
 function obtenerPlatillos() {
@@ -65,6 +68,7 @@ function obtenerPlatillos() {
         .then( resultado => mostrarPlatillos(resultado))
         .catch(error => console.log(error))
 }
+
 
 function mostrarPlatillos(platillos) {
     const contenido = document.querySelector('#platillos .contenido');
@@ -111,6 +115,7 @@ function mostrarPlatillos(platillos) {
 }
 
 
+
 function agregarPlatillo(producto) {
    let { pedido } = cliente;
 
@@ -146,12 +151,13 @@ function agregarPlatillo(producto) {
     }
 }
 
+
 function actualizarResumen() {
 
     const contenido = document.querySelector('#resumen .contenido');
 
     const resumen = document.createElement('DIV');
-    resumen.classList.add('col-md-6', 'card', 'py-5', 'px-3', 'shadow');
+    resumen.classList.add('col-md-6', 'card', 'py-3', 'px-3', 'shadow');
 
     // Mostrar la Mesa
 
@@ -179,7 +185,7 @@ function actualizarResumen() {
 
     const heading = document.createElement('H3');
     heading.textContent = 'Platillos Pedidos';
-    heading.classList.add('my-4');
+    heading.classList.add('my-4', 'text-center');
     
 
     const grupo = document.createElement('UL');
@@ -251,9 +257,9 @@ function actualizarResumen() {
          
     })
 
+    resumen.appendChild(heading);
     resumen.appendChild(mesa);
     resumen.appendChild(hora);
-    resumen.appendChild(heading);
     resumen.appendChild(grupo);
     
 
@@ -264,6 +270,7 @@ function actualizarResumen() {
     formularioPropinas();
 }
 
+
 function limpiarHTML() {
     const contenido = document.querySelector('#resumen .contenido');
     while(contenido.firstChild) {
@@ -271,10 +278,12 @@ function limpiarHTML() {
     }
 }
 
+
 function calcularSubtotal(articulo) {
     const {cantidad, precio} = articulo;
     return `$ ${cantidad * precio}`;
 }
+
 
 function eliminarProducto(id) {
     const { pedido } = cliente;
@@ -294,6 +303,7 @@ function eliminarProducto(id) {
     inputEliminado.value = 0;
 }
 
+
 function mensajePedidoVacio () {
     const contenido = document.querySelector('#resumen .contenido');
 
@@ -304,14 +314,18 @@ function mensajePedidoVacio () {
     contenido.appendChild(texto);
 }
 
+
 function formularioPropinas() {
     const contenido = document.querySelector('#resumen .contenido');
 
     const formulario = document.createElement('DIV');
     formulario.classList.add('col-md-6', 'formulario');
 
+    const divFormulario = document.createElement('DIV');
+    divFormulario.classList.add('card', 'py-3', 'px-3', 'shadow')
+
     const heading = document.createElement('H3');
-    heading.classList.add('my-4');
+    heading.classList.add('my-4', 'text-center');
     heading.textContent = 'Propina';
 
     // Propina 10%
@@ -377,8 +391,11 @@ function formularioPropinas() {
     divFormulario.appendChild(checkDiv25);
     divFormulario.appendChild(checkDiv50);
 
+    formulario.appendChild(divFormulario)
+
     contenido.appendChild(formulario);
 }
+
 
 function calcularPropina() {
     const radioSeleccionado = document.querySelector('[name="propina"]:checked').value;
@@ -407,6 +424,7 @@ function calcularPropina() {
     const subtotalSpan = document.createElement('SPAN');
     subtotalSpan.classList.add('fw-normal');
     subtotalSpan.textContent = `$${subtotal}`;
+    
     subtotalParrafo.appendChild(subtotalSpan);
 
     // Propina
@@ -417,6 +435,7 @@ function calcularPropina() {
     const propinaSpan = document.createElement('SPAN');
     propinaSpan.classList.add('fw-normal');
     propinaSpan.textContent = `$${propina}`;
+
     propinaParrafo.appendChild(propinaSpan);
 
     // Total
@@ -441,7 +460,7 @@ function calcularPropina() {
     divTotales.appendChild(propinaParrafo);
     divTotales.appendChild(totalParrafo);
 
-    const formulario = document.querySelector('.formulario');
+    const formulario = document.querySelector('.formulario > div');
     formulario.appendChild(divTotales);
 
 }
