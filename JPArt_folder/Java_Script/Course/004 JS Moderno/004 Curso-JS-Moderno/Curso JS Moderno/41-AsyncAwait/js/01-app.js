@@ -1,6 +1,4 @@
-// Qué es async await
-
-// async await es la forma más fácil de trabajar con promesas
+// Try Catch
 
 console.log(1+1);
 
