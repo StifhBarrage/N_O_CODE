@@ -1,26 +1,27 @@
-// callback hell to promise...
-const paises = [];
+const countries = [];
 
-const nuevoPais = pais => new Promise( resolve => {
+const newCountry = country => new Promise(resolve => {
+
     setTimeout(() => {
-        paises.push(pais);
-        resolve(`Agregado: ${pais}`)
+
+        countries.push(country);
+        resolve(`applied: ${country}`);
+
     }, 3000);
+
 });
 
-
-nuevoPais('Alemania')
-    .then( resultado => {
-        console.log(resultado);
-        console.log(paises);
-        return nuevoPais('Francia');
+newCountry('Germany')
+    .then(result => {
+        console.log(result);
+        console.log(countries);
+        return newCountry('France');
     })
-    .then(resultado => {
-        console.log(resultado);
-        console.log(paises);
-        return nuevoPais('Inglaterra');
+    .then(result => {
+        console.log(result);
+        console.log(countries);
+        return newCountry('Spain');
     })
-    .then(resultado => {
-        console.log(resultado)
-        console.log(paises);
+    .then(result => {
+        console.log(result);
     })

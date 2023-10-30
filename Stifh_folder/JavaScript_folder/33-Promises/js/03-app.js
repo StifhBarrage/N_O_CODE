@@ -1,35 +1,26 @@
+const applyDiscount = new Promise ((resolve, reject) => {
 
-// Vamos a definir un promise
-const aplicarDescuento = new Promise( (resolve, reject) => { // Puede ser arrow function...
-    const descuento = true;
+    const discount = false;
 
-    // Comentar estas siguientes lineas para ver el Resolve...
-    if(descuento) {
-        resolve('Descuento Aplicado'); 
+    if(discount){
+        resolve('Discount applied');
     } else {
-        reject('No se pudo aplicar el descuento');
+        reject('Discount failed');
     }
 
-});
+})
 
-aplicarDescuento
-    .then( resultado =>  {
-        console.log(resultado);
-    }).catch( error => {
+// fulfill - the promise is fulfilled
+// reject - the promise is rejected
+// resolve - the promise is fulfilled
+// pending - the promise is pending (not fulfilled or rejected yet)
+
+applyDiscount
+    // then is for resolve
+    .then(result => {
+        console.log(result);
+    })
+    // catch is for reject
+    .catch(error => {
         console.log(error);
-    });
-
-    console.log(aplicarDescuento);
-
-// En los Promises hay 3 valores posibles, pendiente, no se ha cumplido o rechazado...
-// Fullfilled - se ha cumplido
-// Rejected - se ha recahzado o no se pudo cumplir
-
-
-// recuerda que gracias a las ventajas de los  arrow functions puedes colocar todo en una sola linea...
-
-// Tal vez tengas la duda de si puedes ejecutar funciones para no tener mucho código, la respuesta es si...
-
-function descuento() {
-    console.log('Aplicando el Descuento...');
-}
+    })
