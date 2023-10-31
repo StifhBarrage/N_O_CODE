@@ -1,3 +1,6 @@
+import { mostrarAlerta, validar } from './funciones.js';
+import { nuevoCliente } from './API.js';
+
 
 (function() {
 
@@ -22,11 +25,11 @@
 
         
         if (validar(cliente)) {
-            console.log('Todos los campos son obligatorios');
+            mostrarAlerta('Todos los campos son obligatorios');
             return;
         }
 
-        console.log('Todos los campos son correctos');
+        nuevoCliente(cliente);
 
     }
 
@@ -34,18 +37,7 @@
         return !Object.values(obj).every(input => input !== '');
     }
 
-    function mostrarAlerta(mensaje) {
-        const alerta = document.createElement('p');
-        alerta.textContent = mensaje;
-        alerta.classList.add('alerta');
 
-        const formulario = document.querySelector('#formulario');
-        formulario.appendChild(alerta);
-
-        setTimeout(() => {
-            alerta.remove();
-        }, 3000);
-    }
 
 
 
