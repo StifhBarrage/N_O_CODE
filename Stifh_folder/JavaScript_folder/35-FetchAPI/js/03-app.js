@@ -1,36 +1,31 @@
-// Fetch API desde un JSON (Objeto)
-
 const cargarJSONArrayBtn = document.querySelector('#cargarJSONArray');
 cargarJSONArrayBtn.addEventListener('click', obtenerDatos);
 
-
 function obtenerDatos() {
-    fetch('data/empleados.json') 
-        .then( respuesta => {
-            return respuesta.json()
-        }) 
-        .then(resultado => {
-            mostrarHTML(resultado);
-            console.log(resultado)
+    const url = 'data/empleados.json'
+
+    fetch(url)
+        .then ( respuesta => {
+            return respuesta.json();
+        })
+
+        .then ( resultado => {
+            console.log(resultado);
+            mostrarHtml(resultado);
         })
 }
 
-function mostrarHTML(empleados) {
-    const contenido = document.querySelector('#contenido');
-
+function mostrarHtml(empleados) {
+    const contenido = document.querySelector('.contenido');
     let html = '';
-
     empleados.forEach( empleado => {
-        const { id, nombre, empresa, trabajo} = empleado;
-
+        const {id, nombre, empresa, trabajo} = empleado;
         html += `
-            <p>Empleado: ${nombre} </p>
-            <p>ID: ${id} </p>
-            <p>Empresa: ${empresa} </p>
-            <p>Trabajo: ${trabajo} </p>
-        `
+            <p>Empleado: ${nombre}</p>
+            <p>ID: ${id}</p>
+            <p>Empresa: ${empresa}</p>
+            <p>Trabajo: ${trabajo}</p>
+        `;
     });
-
     contenido.innerHTML = html;
-    
 }
