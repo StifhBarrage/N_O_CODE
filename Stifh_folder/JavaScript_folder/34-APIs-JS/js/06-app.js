@@ -1,46 +1,40 @@
-const salida = document.querySelector('#salida');
-const microfono = document.querySelector('#microfono');
+const headset = document.querySelector('#salida');
+const microphone = document.querySelector('#microfono');
 
- microfono.addEventListener('click', ejecutarSpeechAPI);
+microphone.addEventListener('click', executeSpeechAPI);
 
-function ejecutarSpeechAPI() {
+function executeSpeechAPI(){
+    const SpeechRecognition = webkitSpeechRecognition;
+    recognition = new SpeechRecognition(); // Assign recognition in the outer scope
 
-    const SpeechRecognition =  webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-
-    // start recognition
     recognition.start();
 
-
-    // This runs when the speech recognition service starts
-    recognition.onstart = function() {
-        salida.classList.add('mostrar');
-        salida.innerHTML = "Escuchando...";
+    recognition.onstart = function () {
+        headset.classList.add('mostrar');
+        headset.textContent = 'Listening...';
     };
     
-    recognition.onspeechend = function() {
-        salida.innerHTML = "Se detuvo de ejecutar";
+    recognition.onspeechend = function () {
+        headset.firstChild.textContent = 'Stopped...';
         recognition.stop();
     };
-  
-    // This runs when the speech recognition service returns result
+
     recognition.onresult = function(e) {
-
-        console.log(e.results);
-
-        var transcript = e.results[0][0].transcript;
-        var confidence = e.results[0][0].confidence;
-
+        console.log(e.results[0][0]);
+        const { confidence, transcript } = e.results[0][0];
 
         const speech = document.createElement('p');
-        speech.innerHTML = `Grabado: ${transcript}`;
+        speech.textContent = `Speech: ${transcript}`;
 
-        const seguridad = document.createElement('p');
-        seguridad.innerHTML =  `Seguridad:  ${ parseInt( confidence*100) } %`;
+        const accuracy = document.createElement('p');
+        accuracy.textContent = `Accuracy: ${parseInt(confidence * 100)}%`;
 
-        salida.appendChild(speech);
-        salida.appendChild(seguridad);
-    };
-  
+        headset.appendChild(speech);
+        headset.appendChild(accuracy);
+
+    }
 
 }
+
+
+
