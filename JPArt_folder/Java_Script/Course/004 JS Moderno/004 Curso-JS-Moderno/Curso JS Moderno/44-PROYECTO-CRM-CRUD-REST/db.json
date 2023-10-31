@@ -1,20 +1,25 @@
 {
   "clientes": [
-
-    {
-      "nombre": "Jhon PArt!",
-      "email": "jpart@correo.com",
-      "telefono": "315284956",
-      "empresa": "UNAL",
-      "id": 22
-    },
-
     {
       "nombre": "Jhon PArt!",
       "email": "jpart@correo.com",
       "telefono": "315284956",
       "empresa": "ANDES",
       "id": 28
+    },
+    {
+      "nombre": "Jhon Prieto",
+      "email": "asdrieto@unal.edu.co",
+      "telefono": "3214569870",
+      "empresa": "UNAL",
+      "id": 29
+    },
+    {
+      "nombre": "Stifh",
+      "email": "stifh@unal.edu.co",
+      "telefono": "3522848259",
+      "empresa": "unal",
+      "id": 31
     }
   ]
 }
