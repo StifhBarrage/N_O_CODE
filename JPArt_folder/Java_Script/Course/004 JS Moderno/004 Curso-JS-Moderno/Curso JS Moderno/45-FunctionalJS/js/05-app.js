@@ -8,3 +8,16 @@ const carrito = [
     { nombre: 'Bocinas', precio: 300},
     { nombre: 'Laptop', precio: 800},
 ];
+
+// Con un arrow function
+const obtenerNombres = p => p.nombre; // menos código
+
+const resultado = carrito.map(obtenerNombres);
+console.log(resultado);
+
+
+// Utilizando una función como argumento
+const mayor400 = p => p.precio > 400;
+const resultado2 = carrito.filter(mayor400);
+
+console.log(resultado2);
