@@ -1,2 +1,9 @@
-console.log('46-DominandoJavaScript/js/01-app.js')
-console.log('Commit waiting before 12am')
+// arrow functions
+
+// const aprendiendo = function() {
+//     console.log('Aprendiendo JavaScript');
+// }
+
+// aprendiendo();
+
+const aprendiendo2 = () => console.log('Aprendiendo JavaScript');
