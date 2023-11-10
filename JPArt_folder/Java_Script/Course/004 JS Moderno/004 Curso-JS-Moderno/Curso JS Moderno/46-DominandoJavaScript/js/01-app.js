@@ -1,9 +1,16 @@
-// arrow functions
+const login = true;
+const cliente = 'Juan';
 
-// const aprendiendo = function() {
-//     console.log('Aprendiendo JavaScript');
-// }
+function clienteAutenticado() {
+    const cliente = 'Pedro';
+    console.log(cliente);
+    if(login) {
+        const cliente = 'Admin';
+        console.log(cliente);
+    }
+}
 
-// aprendiendo();
+clienteAutenticado(); // Pedro Admin
+console.log(cliente); // Juan
 
-const aprendiendo2 = () => console.log('Aprendiendo JavaScript');
+// Scope de un bloque
