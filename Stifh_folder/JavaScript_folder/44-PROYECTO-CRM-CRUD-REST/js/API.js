@@ -16,3 +16,15 @@ export const nuevoCliente = async cliente => {
         console.log(error);
     }
 }
+
+// Obtener todos los clientes
+
+export const obtenerClientes = async () => {
+    try {
+        const resultado = await fetch(ulr);
+        const clientes = await resultado.json();
+        return clientes;
+    } catch (error) {
+        console.log(error);
+    }
+}
