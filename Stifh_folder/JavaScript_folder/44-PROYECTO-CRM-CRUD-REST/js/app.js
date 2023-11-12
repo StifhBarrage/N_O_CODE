@@ -4,6 +4,8 @@
 
     document.addEventListener('DOMContentLoaded', mostrarClientes);
 
+    listado.addEventListener('click', confirmarEliminar);
+
 
     async function mostrarClientes(){
         const clientes = await obtenerClientes();
@@ -32,6 +34,8 @@
             listado.appendChild(row);
         });
     }
+
+
 
 
 })();
