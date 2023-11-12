@@ -30,15 +30,9 @@ export function mostrarAlerta(mensaje){
     }
 
 
-    function confirmarEliminar(e){
-        if(e.target.classList.contains('eliminar')){
-            const clienteId = parseInt(e.target.dataset.cliente);
-            const confirmar = confirm('¿Deseas eliminar este cliente?');
+}
 
-            if(confirmar){
-                eliminarCliente(clienteId);
-            }
-        }
-    }
+export function validar(obj){
+    return !Object.values(obj).every( input => input !== '');
 }
 
