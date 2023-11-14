@@ -1,0 +1,2 @@
+// funciones puras
+
